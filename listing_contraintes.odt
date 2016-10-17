@@ -15,6 +15,10 @@ Contraintes sur les semaines :
 	-Pas cours le samedi ni le dimanche (sauf cas exceptionnel)
 	-Pas cours pour les UEL le jeudi après-midi
 	-Pas cours pendant les vacances et les jours fériés
+	-Pas cours pendant les semaines de révision
+	-Pas cours pendant les journées banalisées (campus day, forum des métiers)
+	-Certains modules doivent se terminer avant une certaines semaines
+	-Certains modules commencent après d’autres modules
 
 Contraintes sur les professeurs :
 	-Un professeur ne peut pas donner deux cours en même temps
