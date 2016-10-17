@@ -1,0 +1,38 @@
+﻿Listing contraintes :
+
+Contraintes sur les salles :
+	-Pas deux cours en même temps dans la même salle
+
+Contraintes sur les horaires :
+	
+
+Contraintes sur les jours :
+	-Une journée commence après une certaine heure (paramètre) et finit avant une certaine heure (paramètre)
+	-Une pause le midi d’au moins (paramètre) minutes.
+	-La pause midi commence toujours avant une certaine heure (paramètre) et finit avant une certaine heure (paramètre)
+
+Contraintes sur les semaines :
+	-Pas cours le samedi ni le dimanche (sauf cas exceptionnel)
+	-Pas cours pour les UEL le jeudi après-midi
+	-Pas cours pendant les vacances et les jours fériés
+
+Contraintes sur les professeurs :
+	-Un professeur ne peut pas donner deux cours en même temps
+	-Un professeur ne peut pas enseigner toutes les sortes de cours
+
+Contraintes sur les groupes :
+	-
+
+Contraintes sur les cours :
+	-
+
+Listing objectifs :
+
+Objectif sur la redondance :
+	-Les journées doivent se ressembler, si un cours peut-être donné toujours le même jour, c’est tant mieux
+
+Objectif sur les trous :
+	-On doit minimiser le nombre de trous
+
+Objectif sur les horaires :
+	-Commencer après 9h, finir avant 17h
