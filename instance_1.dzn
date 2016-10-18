@@ -1,9 +1,12 @@
-UE = 1..3;
+nb_creneau = 30;
+max_UE = 3;
+COURS = 0..max_UE;
+UE = 1..max_UE;
 TYPE = 1..3;
 PROF = 1..2;
 GROUPE = 1..6;
-CRENEAU = 1..6*5;
+CRENEAU = 1..nb_creneau;
 
-volume = [|2,2,3|2,2,3|2,2,3|];
+volume = [|2,2,3|3,2,3|2,2,3|];
 profs = [|1,1,1|2,2,2|2,2,2|];
 dependances_groupes = [|false,true,true,true,true,true|false,false,false,true,true,false|false,false,false,false,true,true|false,false,false,false,false,false|false,false,false,false,false,false|false,false,false,false,false,false|];
