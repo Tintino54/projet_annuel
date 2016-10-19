@@ -23,3 +23,7 @@ dependances_groupes = [|false, true, true, true, true, true|
                         false,false,false,false,false,false|
                         false,false,false,false,false,false|
                         false,false,false,false,false,false|];
+
+%cours 1 a une priorité de 2, cours 2 a une priorité de 1, cours 3 a une priorité de 3
+priorite_ue = [1,1,1];
+limite_ue = [20,10,14];
