@@ -4,6 +4,9 @@ include "globals.mzn";
 % paramètres
 int: nb_creneau;
 int: max_UE;
+int: nb_groupe_td;
+int: nb_groupe_tp;
+
 set of int : COURS;   % nombre de cours comprenant le cours vide 0
 set of int : UE;      % nombre d' UE
 set of int : TYPE;    % nombre de types de cours 
@@ -24,9 +27,17 @@ set of int: INDICE = 1..20;
 
 array[GROUPE, CRENEAU] of var COURS: edt1;
 array[GROUPE, CRENEAU] of var INDICE: edt2;
+array[UE] of var UE: ue;
+
+constraint forall(i in UE)(ue[i] = i);
 
 %TODO , généraliser
-constraint distribute( [1,2,3], row(edt1, 1)) = col(volume, 1);
+%prendre la première ligne comme ligne de CM
+constraint distribute( ue, row(edt1, 1)) = col(volume, 1);
+%prendre les x lignes de groupe de TD
+constraint forall(i in 2..1+nb_groupe_td)(distribute( ue, row(edt1, i)) = col(volume, 2));
+%prendre les x lignes de groupe de TP
+constraint forall(i in 2+nb_groupe_td..nb_groupe_tp+1+nb_groupe_td)(distribute( ue, row(edt1, i)) = col(volume, 3));
 
 solve satisfy;
 output [ show(edt1[i, j]) ++
