@@ -11,7 +11,7 @@ GROUPE = 1..max_groupe;
 type_groupe = [1,2,2,3,3,3];
 CRENEAU = 1..nb_creneau;
 
-volume = [|2,2,3|
+volume = [|7,10,11|
            3,2,3|
            2,2,3|];
 
