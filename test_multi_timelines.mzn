@@ -39,8 +39,8 @@ array[GROUPE] of var int: nb_trou;
 var int: premier_creneau_libre;
 var int: dernier_creneau_libre;
 %array[GROUPE, 1..5] of var COURS: pcl;
-array[GROUPE,1..5] of var COURS: pcl;
-array[GROUPE,1..5] of var COURS: dcl;
+array[GROUPE,1..nb_creneau div 6] of var COURS: pcl;
+array[GROUPE,1..nb_creneau div 6] of var COURS: dcl;
 
 constraint forall(i in UE)(ue[i] = i);
 
@@ -50,7 +50,7 @@ constraint forall(i in UE)(ue[i] = i);
 %constraint forall(i in PROF,j in CRENEAU)(sum(k in GROUPE)(bool2int(profs[edt1[k,j],type_groupe[k]]=i))<=1);
 
 % Contrainte dépendance des groupes
-constraint forall(i in CRENEAU,j in GROUPE, k in j+1..max_groupe)(dependances_groupes[j,k] -> (edt1[j,i] > 0 /\ edt1[k,i] > 0) == 0);   
+%constraint forall(i in CRENEAU,j in GROUPE, k in j+1..max_groupe)(dependances_groupes[j,k] -> (edt1[j,i] > 0 /\ edt1[k,i] > 0) == 0);   
 
 %prendre la première ligne comme ligne de CM
 
