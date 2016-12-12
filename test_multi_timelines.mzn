@@ -1,6 +1,7 @@
 include "globals.mzn";
 %% Paramètres %%
 int: nb_creneau;
+int : cr_par_jour = 6;
 int: nb_UE;
 int: max_groupe;
 int: nb_groupe_td;
@@ -47,10 +48,10 @@ constraint forall(i in UE)(ue[i] = i);
 %% Contraintes %%
 
 % Un prof ne peut pas donner deux cours en même temps
-%constraint forall(i in PROF,j in CRENEAU)(sum(k in GROUPE)(bool2int(profs[edt1[k,j],type_groupe[k]]=i))<=1);
+constraint forall(i in PROF,j in CRENEAU)(sum(k in GROUPE)(bool2int(profs[edt1[k,j],type_groupe[k]]=i))<=1);
 
 % Contrainte dépendance des groupes
-%constraint forall(i in CRENEAU,j in GROUPE, k in j+1..max_groupe)(dependances_groupes[j,k] -> (edt1[j,i] > 0 /\ edt1[k,i] > 0) == 0);   
+constraint forall(i in CRENEAU,j in GROUPE, k in j+1..max_groupe)(dependances_groupes[j,k] -> (edt1[j,i] > 0 /\ edt1[k,i] > 0) == 0);   
 
 %prendre la première ligne comme ligne de CM
 
@@ -59,7 +60,7 @@ constraint forall(i in 2..1+nb_groupe_td)(distribute( ue, row(edt1, i)) = col(vo
 constraint forall(i in 2+nb_groupe_td..nb_groupe_tp+1+nb_groupe_td)(distribute( ue, row(edt1, i)) = col(volume, 3));
 
 %pas cours le jeudi après-midi
-constraint forall(i in GROUPE, j in CRENEAU, where j mod 30 = 22 \/ j mod 30 = 23 \/ j mod 30 = 24)(edt1[i,j] = 0);
+%constraint forall(i in GROUPE, j in CRENEAU, where j mod 30 = 22 \/ j mod 30 = 23 \/ j mod 30 = 24)(edt1[i,j] = 0);
 
 %todo définition des trous, un trou est pour un paquet de 6, les cours à 0 entre le premier et dernier cours
 constraint forall(i in GROUPE)(
@@ -68,10 +69,10 @@ constraint forall(i in GROUPE)(
 
 
 %Pour favoriser les cours commençant après le créneau 1 et finissant avant le créneau 6 tous les jours
-constraint forall(i in 1..(nb_creneau div 6), j in GROUPE)(row(edt1,j)[(i-1)*6+1] = pcl[j,i]);
+/*constraint forall(i in 1..(nb_creneau div cr_par_jour), j in GROUPE)(row(edt1,j)[(i-1)*cr_par_jour+1] = pcl[j,i]);
 constraint premier_creneau_libre = sum(i in GROUPE)(count(row(pcl, i), 0));
-constraint forall(i in 1..(nb_creneau div 6), j in GROUPE)(row(edt1,j)[i*6] = dcl[j,i]);
-constraint dernier_creneau_libre = sum(i in GROUPE)(count(row(dcl, i), 0));
+constraint forall(i in 1..(nb_creneau div cr_par_jour), j in GROUPE)(row(edt1,j)[i*cr_par_jour] = dcl[j,i]);
+constraint dernier_creneau_libre = sum(i in GROUPE)(count(row(dcl, i), 0));*/
 
 % contraintes de précédence
 constraint forall(i in 1..nb_UE,j in 1..min_ue[i])(forall(k in GROUPE)(edt1[k,j] != i));
