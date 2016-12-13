@@ -86,6 +86,4 @@ solve satisfy;
 
 %function int: count_gaps(array of int: ) = ;
 
-output [ show(edt1[i, j]) ++
-    if j == nb_creneau then "\n" else " " endif ++ if j mod 6 == 0 then "  " else "" endif | i in GROUPE, j in CRENEAU
-];
+output ["   UE" ++ show(UE[i]) ++ "   "|i in UE] ++ ["\n"] ++ ["CM TD TP "|i in UE] ++ ["\n"] ++ [ " " ++ show(volume[i,j]) ++ " "| i in UE, j in TYPE] ++ ["\n "] ++ [show(edt1[i, j])++ if j == nb_creneau then "\n" else " " endif ++ if j mod cr_par_jour == 0 then " " else "" endif  | i in GROUPE, j in CRENEAU];
