@@ -1,5 +1,5 @@
 %nombre de créneaux sur lequel l'emploi du temps doit être fait 30 créneaux pour une semaine
-nb_creneau = 30;
+nb_creneau = 60;
 
 %nombre maximum de groupes correspond au nombre de groupe de TP et TD et CM (1)
 max_groupe = nb_groupe_tp+nb_groupe_td+1;
@@ -25,7 +25,7 @@ min_ue = [1,1,1];
 
 %Tableau de la taille du nombre d'UE, indique le créneau maximum pour la fin d'un cours
 %exemple : [3,6,10] veut dire l'UE 1 doit finir avant le créneau 3, l'UE 2 avant le creneau 6 et l'UE 3 avant le creneau 10
-max_ue = [30,30,30];
+max_ue = [60,60,60];
 
 %type de cours (1 = CM, 2 = TD, 3 = TP)
 TYPE = 1..3;
@@ -47,9 +47,9 @@ CRENEAU = 1..nb_creneau;
 %exemple : volume = [|2,2,3|
 %                     3,2,3|
 %                     2,2,3|];        l'UE 1 doit 2h de CM, 3h de TP et 2h de CM
-volume = [|2,2,3|
-           3,2,3|
-           2,2,3|];
+volume = [|10,2,3|
+           3,3,3|
+           2,2,4|];
 
 %volume horaire
 %exemple : profs =  [|1,1,1|
