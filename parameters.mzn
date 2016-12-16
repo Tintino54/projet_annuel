@@ -6,6 +6,7 @@ int: nb_UE;
 int: max_groupe;
 int: nb_groupe_td;
 int: nb_groupe_tp;
+int: nb_profs;
 var int: ref;
 set of int : COURS;   % nombre de cours comprenant le cours vide 0
 set of int : UE;      % nombre d' UE

@@ -1,9 +1,6 @@
 %nombre de créneaux sur lequel l'emploi du temps doit être fait 30 créneaux pour une semaine
 nb_creneau = 30;
 
-%nombre de profs
-nb_profs = 3;
-
 %nombre maximum de groupes correspond au nombre de groupe de TP et TD et CM (1)
 max_groupe = nb_groupe_tp+nb_groupe_td+1;
 
@@ -15,6 +12,9 @@ nb_groupe_td = 2;
 
 %nombre de sortes d'UE, on a trois sortes de cours différents
 nb_UE = 3;
+
+%nombre de séances maximum d'écart entre différents groupes
+nb_seances_max_ecart = 2;
 
 %Cours de 0 à nombre d'ue, le 0 représente un cours vide, un trou dans l'emploi du temps
 COURS = 0..nb_UE;
@@ -34,7 +34,7 @@ max_ue = [30,30,30];
 TYPE = 1..3;
 
 %indice du prog (1 = prof1, 2 = prof2 ...)
-PROF = 1..nb_profs;
+PROF = 1..3;
 
 %indice des groupes
 GROUPE = 1..max_groupe;
@@ -50,17 +50,17 @@ CRENEAU = 1..nb_creneau;
 %exemple : volume = [|2,2,3|
 %                     3,2,3|
 %                     2,2,3|];        l'UE 1 doit 2h de CM, 3h de TP et 2h de CM
-volume = [|1,2,3|
-           1,2,3|
-           1,1,1|];
+volume = [|2,2,3|
+           3,2,3|
+           2,2,3|];
 
 %volume horaire
 %exemple : profs =  [|1,1,1|
 %                     2,2,2|
 %                     3,3,3|];        prof 1 peut enseigner en cours/td/tp les UE 1,2,3
-profs =  [|3,3,3|
-           1,1,1|
-           2,2,2|];
+profs =  [|1,1,1|
+           2,2,2|
+           3,3,3|];
 
 %matrice de dépendance des groupes
 %certains groupes ne peuvent pas avoir lieu en même temps que d'autres

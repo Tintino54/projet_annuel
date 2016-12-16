@@ -39,7 +39,7 @@ public class Main {
 		    	}else if(kindOfGroup.equals("TD")){
 		    		realGroupValue = "1+"+groupeID;
 		    	}else if(kindOfGroup.equals("TP")){
-		    		realGroupValue = "1+nb_groupe_TD+"+groupeID;
+		    		realGroupValue = "1+nb_groupe_td+"+groupeID;
 		    	}
 		    	res = res + "constraint edt1["+realGroupValue+","+current.getCreneau()+"] = "+current.getUE()+";" + "\n";
 		    }

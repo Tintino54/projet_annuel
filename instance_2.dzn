@@ -47,9 +47,9 @@ CRENEAU = 1..nb_creneau;
 %exemple : volume = [|2,2,3|
 %                     3,2,3|
 %                     2,2,3|];        l'UE 1 doit 2h de CM, 3h de TP et 2h de CM
-volume = [|10,2,3|
-           3,3,3|
-           2,2,4|];
+volume = [|2,2,3|
+           3,3,5|
+           1,1,3|];
 
 %volume horaire
 %exemple : profs =  [|1,1,1|

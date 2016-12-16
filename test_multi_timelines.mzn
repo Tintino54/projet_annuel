@@ -1,6 +1,8 @@
 include "globals.mzn";
 include "parameters.mzn";
-include "initial_constraint.mzn"
+include "initial_constraint.mzn";
+include "absolute_data.mzn";
+%include "jours_feries.mzn";
 
 %% Variables de décision %%
 
@@ -11,13 +13,19 @@ array[UE] of var UE: ue;
 array[GROUPE] of var int: nb_trou;
 var int: premier_creneau_libre;
 var int: dernier_creneau_libre;
-%array[GROUPE, 1..5] of var COURS: pcl;
 array[GROUPE,1..nb_creneau div 6] of var COURS: pcl;
 array[GROUPE,1..nb_creneau div 6] of var COURS: dcl;
+
+array[GROUPE, CRENEAU] of var 0..nb_profs: prof_edt;
 
 constraint forall(i in UE)(ue[i] = i);
 
 %% Contraintes %%
+
+%remplit matrice des profs
+constraint forall(i in GROUPE, j in CRENEAU)(
+  if edt1[i,j] > 0 then prof_edt[i,j] = profs[edt1[i,j], type_groupe[i]] else true endif
+);
 
 % Un prof ne peut pas donner deux cours en même temps
 constraint forall(i in PROF,j in CRENEAU)(sum(k in GROUPE)(bool2int(profs[edt1[k,j],type_groupe[k]]=i))<=1);
@@ -57,6 +65,6 @@ solve :: int_search([edt1[i,j] | i in GROUPE, j in CRENEAU],input_order,indomain
 
 %function int: count_gaps(array of int: ) = ;
 
-output ["   UE" ++ show(UE[i]) ++ "   "|i in UE] ++ ["\n "] ++ ["CM TD TP "|i in UE] ++ ["\n"] ++ [ " " ++ show(volume[i,j]) ++ " "| i in UE, j in TYPE] ++ ["\n "] ++ [show(edt1[i, j])++
+output ["   UE" ++ show(UE[i]) ++ "   "|i in UE] ++ ["\n "] ++ ["CM TD TP "|i in UE] ++ ["\n"] ++ [ " " ++ show(volume[i,j]) ++ " "| i in UE, j in TYPE] ++ ["\n "] ++ [show(prof_edt[i, j])++
     if j == nb_creneau then "\n" else " " endif ++ if j mod max_groupe == 0 then " " else "" endif  | i in GROUPE, j in CRENEAU
 ];
