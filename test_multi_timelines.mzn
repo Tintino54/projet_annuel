@@ -20,6 +20,8 @@ array[GROUPE, CRENEAU] of var 0..nb_profs: prof_edt;
 
 constraint forall(i in UE)(ue[i] = i);
 
+var int : nb_differences;
+
 %% Contraintes %%
 
 %remplit matrice des profs
@@ -60,11 +62,16 @@ constraint forall(i in min(max_ue)..nb_creneau, j in GROUPE)(edt1[j,i] != 0 -> m
 %assigner les cours selon leur priorité
 %constraint forall(i in CRENEAU, j in CRENEAU where j > i /\ edt1[1,i] != 0 /\ edt1[1,j] != 0)(priorite_ue[edt1[1,i]] < priorite_ue[edt1[1,j]]);
 
+% contrainte de redondance fait en sorte que chaque semaine ressemble le plus à la semaine précédente 
+constraint nb_differences = sum(s in 1..nb_creneau div (cr_par_jour * jours_par_semaine) - 1, i in GROUPE, j in 1..cr_par_jour * jours_par_semaine)
+                               (bool2int(edt1[i,j + (cr_par_jour * jours_par_semaine) * (s-1)] != edt1[i, j + (cr_par_jour * jours_par_semaine) * s])
+                            );
+
 %solve maximize premier_creneau_libre + dernier_creneau_libre;
 solve :: int_search([edt1[i,j] | i in GROUPE, j in CRENEAU],input_order,indomain_max,complete) satisfy;
 
 %function int: count_gaps(array of int: ) = ;
 
-output ["   UE" ++ show(UE[i]) ++ "   "|i in UE] ++ ["\n "] ++ ["CM TD TP "|i in UE] ++ ["\n"] ++ [ " " ++ show(volume[i,j]) ++ " "| i in UE, j in TYPE] ++ ["\n "] ++ [show(prof_edt[i, j])++
+output ["   UE" ++ show(UE[i]) ++ "   "|i in UE] ++ ["\n "] ++ ["CM TD TP "|i in UE] ++ ["\n"] ++ [ " " ++ show(volume[i,j]) ++ " "| i in UE, j in TYPE] ++ ["\n "] ++ [show(edt1[i, j])++
     if j == nb_creneau then "\n" else " " endif ++ if j mod max_groupe == 0 then " " else "" endif  | i in GROUPE, j in CRENEAU
 ];
