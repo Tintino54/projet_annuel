@@ -14,22 +14,26 @@ public class Main {
 	
 	public static void main(String[] args) throws IOException {
 		
-		ArrayList<Constraint> constraints = new ArrayList<Constraint>();
+		ArrayList<ConstraintEDT> constraintsEDT = new ArrayList<ConstraintEDT>();
+		ArrayList<ConstraintPROF> constraintsPROF = new ArrayList<ConstraintPROF>();
 		try (BufferedReader br = new BufferedReader(new FileReader(new File(initial)))) {
 		    String line;
 		    File sortie = new File(result);
 		    sortie.createNewFile();
 		    FileWriter fw = new FileWriter(sortie);
 		    while ((line = br.readLine()) != null) {
-		    	constraints.add(createConstraint(line));
+		    	if(!line.subSequence(0, 1).equals("a"))
+		    		constraintsEDT.add(createConstraintEDT(line));
+		    	else
+		    		constraintsPROF.add(createConstraintPROF(line));
 		    }
 		    String res = "";
 		    String kindOfGroup;
-		    Constraint current;
+		    ConstraintEDT current;
 		    String realGroupValue = "";
 		    String groupeID = "";
-		    for(int i = 0; i < constraints.size(); i++){
-		    	current = constraints.get(i);
+		    for(int i = 0; i < constraintsEDT.size(); i++){
+		    	current = constraintsEDT.get(i);
 		    	
 		    	kindOfGroup = current.getGroupe().substring(0,2);
 		    	
@@ -44,22 +48,51 @@ public class Main {
 		    	res = res + "constraint edt1["+realGroupValue+","+current.getCreneau()+"] = "+current.getUE()+";" + "\n";
 		    }
 		    
+		    ConstraintPROF currentPROF;
+		    for(int i = 0; i < constraintsPROF.size(); i++){
+		    	currentPROF = constraintsPROF.get(i);
+		    	/*constraint forall(i in GROUPE, j in 7..14)(
+		    			  prof_edt[i, j] != 3
+		    	);*/
+		    	res = res + "constraint forall(i in GROUPE, j in "+currentPROF.valueCreneau()+")(" +
+		    			"prof_edt[i,j] != "+currentPROF.getNumProf()+");";
+		    			
+		    }
+		    
 		    fw.write(res);
 		    System.out.println(res);
 		    fw.close();
 		}
 	}
 	
-	public static Constraint createConstraint(String line){
+	public static ConstraintEDT createConstraintEDT(String line){
+		String groupe, creneau, ue;
+		
 		String tab[] = new String[2];
 		tab = line.split(",");
-		String groupe = tab[0].substring(1, tab[0].length());
+		groupe = tab[0].substring(1, tab[0].length());
 		String part2[] = new String[2];
 		part2 = tab[1].split("]");
-		String creneau = part2[0];
+		creneau = part2[0];
 		tab = line.split("UE");
-		String ue = tab[1];
+		ue = tab[1];
 		
-		return new Constraint(groupe, creneau, ue);
+		return new ConstraintEDT(groupe, creneau, ue);
+	}
+	
+	public static ConstraintPROF createConstraintPROF(String line){
+		String prof, semaine, jour;
+		
+		String tab[] = new String[3];
+		tab = line.split(",");
+		String profs[] = new String[2];
+		profs = tab[0].split("prof");
+		prof = profs[1];
+		String semaines[] = tab[1].split("semaine");
+		semaine = semaines[1];
+		jour = tab[2].substring(0, tab[2].length()-1);
+		
+		
+		return new ConstraintPROF(prof, semaine, jour);
 	}
 }

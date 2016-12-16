@@ -29,6 +29,11 @@ constraint forall(i in GROUPE, j in CRENEAU)(
   if edt1[i,j] > 0 then prof_edt[i,j] = profs[edt1[i,j], type_groupe[i]] else true endif
 );
 
+
+/*constraint forall(i in GROUPE, j in 7..14)(
+  prof_edt[i, j] != 3
+);*/
+
 % Un prof ne peut pas donner deux cours en même temps
 constraint forall(i in PROF,j in CRENEAU)(sum(k in GROUPE)(bool2int(profs[edt1[k,j],type_groupe[k]]=i))<=1);
 
