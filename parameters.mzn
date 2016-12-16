@@ -13,6 +13,8 @@ set of int : UE;      % nombre d' UE
 set of int : TYPE;    % nombre de types de cours 
 set of int : PROF;    % nombre de professseurs
 set of int : GROUPE;  % nombre de groupes
+set of int : GROUPE_DEUX_A_DEUX_TD; % nombre de groupes deux à deux (exemple TP1-TP2, TP1-TP3, TP2-TP3) utilisé pour des calcus de séances d'écart
+set of int : GROUPE_DEUX_A_DEUX_TP;
 set of int : CRENEAU; % nombre de creneaux
 
 array[UE] of int : min_ue; % date du premier créneau de chaque UE

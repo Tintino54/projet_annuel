@@ -38,6 +38,8 @@ PROF = 1..nb_profs;
 
 %indice des groupes
 GROUPE = 1..max_groupe;
+GROUPE_DEUX_A_DEUX_TD = 1..1;
+GROUPE_DEUX_A_DEUX_TP = 1..3;
 
 %indique les nombres de groupes de CM, TD, TP
 %exemple : [1,2,2,3,3,3] 1 groupe de CM, 2 groupe de TD, 3 groupes de TP
