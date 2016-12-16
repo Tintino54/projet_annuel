@@ -27,6 +27,11 @@ constraint forall(i in GROUPE, j in CRENEAU)(
   if edt1[i,j] > 0 then prof_edt[i,j] = profs[edt1[i,j], type_groupe[i]] else true endif
 );
 
+
+/*constraint forall(i in GROUPE, j in 7..14)(
+  prof_edt[i, j] != 3
+);*/
+
 % Un prof ne peut pas donner deux cours en même temps
 constraint forall(i in PROF,j in CRENEAU)(sum(k in GROUPE)(bool2int(profs[edt1[k,j],type_groupe[k]]=i))<=1);
 
@@ -65,6 +70,6 @@ solve :: int_search([edt1[i,j] | i in GROUPE, j in CRENEAU],input_order,indomain
 
 %function int: count_gaps(array of int: ) = ;
 
-output ["   UE" ++ show(UE[i]) ++ "   "|i in UE] ++ ["\n "] ++ ["CM TD TP "|i in UE] ++ ["\n"] ++ [ " " ++ show(volume[i,j]) ++ " "| i in UE, j in TYPE] ++ ["\n "] ++ [show(prof_edt[i, j])++
+output ["   UE" ++ show(UE[i]) ++ "   "|i in UE] ++ ["\n "] ++ ["CM TD TP "|i in UE] ++ ["\n"] ++ [ " " ++ show(volume[i,j]) ++ " "| i in UE, j in TYPE] ++ ["\n "] ++ [show(edt1[i, j])++
     if j == nb_creneau then "\n" else " " endif ++ if j mod max_groupe == 0 then " " else "" endif  | i in GROUPE, j in CRENEAU
 ];

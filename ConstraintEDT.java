@@ -1,9 +1,9 @@
 
-public class Constraint {
+public class ConstraintEDT {
 	private String groupe;
 	private String creneau;
 	private String UE;
-	public Constraint(String g, String c, String u){
+	public ConstraintEDT(String g, String c, String u){
 		groupe = g;
 		creneau = c;
 		UE = u;
