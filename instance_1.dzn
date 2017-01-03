@@ -13,6 +13,9 @@ nb_groupe_tp = 3;
 %nombre de groupes de TD
 nb_groupe_td = 2;
 
+% nombre de jours de cours par semaine
+jours_par_semaine = 5;
+
 %nombre de sortes d'UE, on a trois sortes de cours différents
 nb_UE = 3;
 
